@@ -23,5 +23,8 @@
     <ClInclude Include="imageloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="textureloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

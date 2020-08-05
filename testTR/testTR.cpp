@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <GL/freeglut.h>
 #include "imageloader.h";
+#include "textureloader.h";
 
 void display();
 bool mouseDown = false;
