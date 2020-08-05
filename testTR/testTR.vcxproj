@@ -148,6 +148,12 @@
     <ClInclude Include="imageloader.h" />
     <ClInclude Include="textureloader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Woman1.nfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Woman1.tga" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

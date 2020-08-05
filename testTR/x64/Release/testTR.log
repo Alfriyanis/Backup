@@ -1,8 +1,13 @@
 ﻿  testTR.cpp
-C:\Users\Alfriyanis\source\repos\testTR\testTR\testTR.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Alfriyanis\Desktop\Github\testTR2\testTR\testTR.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Alfriyanis\Desktop\Github\testTR2\testTR\testTR.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Alfriyanis\Desktop\Github\testTR2\testTR\testTR.cpp(68,30): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Alfriyanis\Desktop\Github\testTR2\testTR\testTR.cpp(76,31): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Alfriyanis\Desktop\Github\testTR2\testTR\testTR.cpp(80,31): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Alfriyanis\Desktop\Github\testTR2\testTR\testTR.cpp(84,30): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   Generating code
-  1 of 30 functions ( 3.3%) were compiled, the rest were copied from previous compilation.
+  1 of 236 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  testTR.vcxproj -> C:\Users\Alfriyanis\source\repos\testTR\x64\Release\testTR.exe
+  testTR.vcxproj -> C:\Users\Alfriyanis\Desktop\Github\testTR2\x64\Release\testTR.exe

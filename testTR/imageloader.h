@@ -4,9 +4,9 @@ int num;
 int jumVertex = 512;
 int jumTampilan = 718;
 
-struct list {int u1, u2, u3;};
-struct pos {float x, y, z;};
-struct uv {float u, v;};
+struct list { int u1, u2, u3; };
+struct pos { float x, y, z; };
+struct uv { float u, v; };
 
 float ax, ay, az, bx, by, bz, cx, cy, cz;
 

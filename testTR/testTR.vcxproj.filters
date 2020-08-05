@@ -27,4 +27,14 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Woman1.nfg">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Woman1.tga">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
