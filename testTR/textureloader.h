@@ -1,36 +1,34 @@
 #pragma once
-
 #include <vector>
 #include <fstream>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <GL/GL.h>
+#include <GL/GLU.h>
 
 using namespace std;
 
-
 typedef union PixelInfo {
-    uint32_t Colour;
+    uint32_t Col;
     struct {
         uint8_t R, G, B, A;
     };
 } *PPixelInfo;
 
-class Tga {
+class Model {
 private:
     vector<std::uint8_t> Pixels;
-    bool ImageCompressed;
+    bool ImgComp;
     uint32_t width, height, size, BitsPerPixel;
 
 public:
-    Tga(const char* FilePath);
+    Model(const char* FilePath);
     vector<std::uint8_t> GetPixels() { return this->Pixels; }
     uint32_t GetWidth() const { return this->width; }
     uint32_t GetHeight() const { return this->height; }
     bool HasAlphaChannel() { return BitsPerPixel == 32; }
 };
 
-Tga::Tga(const char* FilePath) {
+Model::Model(const char* FilePath) {
     fstream hFile(FilePath, ios::in | ios::binary);
     if (!hFile.is_open()) { throw std::invalid_argument("File Not Found."); }
 
@@ -53,7 +51,7 @@ Tga::Tga(const char* FilePath) {
         }
 
         ImageData.resize(size);
-        ImageCompressed = false;
+        ImgComp = false;
         hFile.read(reinterpret_cast<char*>(ImageData.data()), size);
     }
     else if (!memcmp(IsCompressed, &Header, sizeof(IsCompressed))) {
@@ -70,7 +68,7 @@ Tga::Tga(const char* FilePath) {
         PixelInfo Pixel = { 0 };
         int CurrentByte = 0;
         size_t CurrentPixel = 0;
-        ImageCompressed = true;
+        ImgComp = true;
         uint8_t ChunkHeader = { 0 };
         int BytesPerPixel = (BitsPerPixel / 8);
         ImageData.resize(width * height * sizeof(PixelInfo));

@@ -1,36 +1,143 @@
 #pragma once
+#include <math.h>
 
-int num;
-int jumVertex = 512;
-int jumTampilan = 718;
 
-struct list { int u1, u2, u3; };
-struct pos { float x, y, z; };
-struct uv { float u, v; };
+class Conf {
+public:
+	int winWidth = 500;
+	int winHeight = 500;
+	int winPosX = 200;
+	int winPosY = 200;
+};
 
-float ax, ay, az, bx, by, bz, cx, cy, cz;
+class _Vec2 {
+public:
+	GLfloat x;
+	GLfloat y;
+};
 
-list* _list = new list[jumTampilan];
-pos* _pos = new pos[jumVertex];
-uv* _uv = new uv[jumVertex];
+class _Vec3 {
+public:
+	GLfloat x;
+	GLfloat y;
+	GLfloat z;
+};
 
-int Load(const char* model) {
-	FILE* f;
-	fopen_s(&f, model, "r");
-	if (!f) {
-		printf("Gagal Membuka File");
-		return 0;
+class _VecInt3 {
+public:
+	GLint x;
+	GLint y;
+	GLint z;
+};
+
+
+
+class Nfg {
+
+	struct vertex {
+		_Vec3 pos, norm, binorm, tgt;
+		_Vec2 uv;
+	};
+
+	struct pattern {
+		_VecInt3 pos;
+	};
+
+public:
+	struct vertex myVertex[512];
+	struct pattern myPattern[718];
+	GLint totalNrVertex, totalNrIndices;
+
+private:
+	FILE* loadModel;
+
+	float px, py, pz, nx, ny, nz, bx, by, bz, tx, ty, tz, u, v;
+	int x, y, z;
+	char junk[200];
+
+	bool loadFile() {
+		// Buka File
+		fopen_s(&loadModel, "C:/Users/Alfriyanis/Desktop/Github/GRAFKOM_TR_H_672016125/GRAFKOM_TR_H_672016125/Woman1.nfg", "r");
+		if (!loadModel) {
+			return false;
+		}
+		return true;
 	}
-	fscanf_s(f, "NrVertices:%d", &jumVertex);
-	for (int i = 0; i < jumVertex; i++) {
-		fscanf_s(f, "   %d. pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];",
-			&num, &_pos[i].x, &_pos[i].y, &_pos[i].z, &ax, &ay, &az, &bx, &by, &bz, &cx, &cy, &cz, &_uv[i].u, &_uv[i].v);
-		std::cout << _pos[i].x << " : " << _pos[i].y << " : " << _pos[i].z << " : " << _uv[i].u << " : " << _uv[i].v << std::endl;
+
+	void loadNrVertex() {
+		// Mendapatkan total node
+		fscanf_s(this->loadModel, "NrVertices : %d", &totalNrVertex);
+		//printf("NrVertices:%d\n", totalNrVertex);
 	}
 
-	fscanf_s(f, "\nNrIndices:%d", &jumTampilan);
-	for (int i = 0; i < (int)jumTampilan / 3; i++) {
-		fscanf_s(f, "   %d.    %d,    %d,    %d", &num, &_list[i].u1, &_list[i].u2, &_list[i].u3);
-		std::cout << num << " : " << _list[i].u1 << " : " << _list[i].u2 << " : " << _list[i].u3 << std::endl;
+	void loadCoordinate() {
+		for (int i = 0; i < totalNrVertex; i++) {
+
+			// Membaca nilai pada setiap baris 
+			fscanf_s(loadModel, "%*d. pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];", &px, &py, &pz, &nx, &ny, &nz, &bx, &by, &bz, &tx, &ty, &tz, &u, &v);
+
+			this->myVertex[i].pos.x = px;
+			this->myVertex[i].pos.y = py;
+			this->myVertex[i].pos.z = pz;
+
+			this->myVertex[i].norm.x = nx;
+			this->myVertex[i].norm.y = ny;
+			this->myVertex[i].norm.z = nz;
+
+			this->myVertex[i].binorm.x = bx;
+			this->myVertex[i].binorm.y = by;
+			this->myVertex[i].binorm.z = bz;
+
+			this->myVertex[i].tgt.x = tx;
+			this->myVertex[i].tgt.y = ty;
+			this->myVertex[i].tgt.z = tz;
+
+			this->myVertex[i].uv.x = u;
+			this->myVertex[i].uv.y = v;
+
+			//printf("%d. pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];\n", i, px, py, pz, nx, ny, nz, bx, by, bz, tx, ty, tz, u, v);
+		}
 	}
-}
+
+	void loadNrIndices() {
+		fscanf_s(this->loadModel, "\nNrIndices:%d", &totalNrIndices);
+		//printf("NrIndices:%d\n", totalNrIndices);
+	}
+
+	void trianglePattern() {
+
+		int Ntriangle = totalNrIndices / 3;
+
+		fscanf_s(this->loadModel, "\n");
+
+		for (int i = 0; i < Ntriangle; i++) {
+			fscanf_s(this->loadModel, "%*d. %d, %d, %d", &x, &y, &z);
+			//printf("%d. %d %d %d\n", i, x, y, z);
+			this->myPattern[i].pos.x = x;
+			this->myPattern[i].pos.y = y;
+			this->myPattern[i].pos.z = z;
+
+			//printf("%d. %d %d %d\n", i, this->myPattern[i].pos.x, this->myPattern[i].pos.y, this->myPattern[i].pos.z);
+
+		}
+
+	}
+
+	void closeFile() {
+		fclose(loadModel);
+	}
+
+public:
+	void process() {
+		if (this->loadFile()) {
+			this->loadNrVertex();
+			this->loadCoordinate();
+			this->loadNrIndices();
+			this->trianglePattern();
+			this->closeFile();
+		}
+		else {
+			printf("File cannot proccessed");
+		}
+	}
+};
